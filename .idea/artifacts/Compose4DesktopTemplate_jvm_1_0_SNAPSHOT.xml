@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Compose4DesktopTemplate-jvm-1.0-SNAPSHOT">
+    <output-path>$PROJECT_DIR$/build/libs</output-path>
+    <root id="archive" name="Compose4DesktopTemplate-jvm-1.0-SNAPSHOT.jar">
+      <element id="module-output" name="Compose4DesktopTemplate.jvmMain" />
+    </root>
+  </artifact>
+</component>
