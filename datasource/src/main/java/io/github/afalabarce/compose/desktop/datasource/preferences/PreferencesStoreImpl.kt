@@ -172,5 +172,4 @@ internal class PreferencesStoreImpl: PreferencesStore, CoroutineScope by Corouti
         properties.setProperty("FirstLoad", isFirstLoad.toString())
         properties.applyChanges()
     }
-
 }
