@@ -1,4 +1,4 @@
-package io.github.afalabarce.compose.desktop.datasource.extensions
+package io.github.afalabarce.compose.desktop.datasource.cache.extensions
 
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.Transaction

@@ -26,7 +26,8 @@ kotlin {
         val constraintLayoutComposeVersion = "1.1.0-alpha09"
         val composeRuntimeVersion = "1.3.3"
         val composeUiVersion = "1.5.0-alpha02"
-
+        val koinVersion = "3.3.3"
+        val koinComposeVersion = "3.3.0"
         val jvmMain by getting {
             dependencies {
                 implementation(compose.desktop.currentOs)
@@ -38,7 +39,8 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
 
                 // Koin dependencies for automatic dependency provisioning
-                implementation("io.insert-koin:koin-core:3.3.3")
+                implementation("io.insert-koin:koin-core:$koinVersion")
+                implementation("io.insert-koin:koin-androidx-compose:$koinComposeVersion")
 
                 implementation("androidx.compose.animation:animation:$composeAnimationVersion")
                 implementation("androidx.compose.animation:animation-core:$composeAnimationVersion")
