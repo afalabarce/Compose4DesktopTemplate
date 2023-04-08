@@ -520,6 +520,67 @@ de las propiedades y a continuación se emite el valor que nos interese.
 el valor de la propiedad y a continuación aplicar los cambios, lo que provocará que los flow que haya definidos emitan sus 
 correspondientes modificaciones, obteniendo por tanto la reactividad que buscamos.
 
+## Despliegue en las distintas plataformas
+
+El proyecto está preparado para ser desplegado en distintas plataformas (concretamente MacOs y Windows - mis disculpas, no 
+dispongo de una máquina con Linux -).
+
+Para poder configurar los despliegues, en el build.gradle.kts del proyecto principal es preciso agregar una serie de elementos
+en el bloque compose.desktop:
+
+```kotlin
+compose.desktop {
+    application {
+        mainClass = "$group.MainKt"
+        fromFiles(project.fileTree("libs/") { include("**/*.jar") })
+
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "Compose4Desktop Template App"
+            description = "Template App for creating Desktop Multiplatform apps with Compose"
+            packageVersion = "1.0.0"
+            includeAllModules = true
+            javaHome = "/Library/Java/JavaVirtualMachines/jdk-17.0.2.jdk"
+            vendor = "Antonio Fdez. Alabarce"
+            appResourcesRootDir.set(project.layout.projectDirectory.dir("resources"))
+            windows {
+                iconFile.set(project.file("src/jvmMain/resources/mipmap/ic_launcher.ico"))
+                dirChooser = true
+                //javaHome = "C:\\Program Files\\JetBrains\\IntelliJ IDEA Community Edition 2022.2.2\\jbr"
+                menuGroup = "Compose4Dektop Template App"
+            }
+
+            macOS{
+                packageBuildVersion = "1.0.0"
+                bundleID = "$group.MainKt"
+                dockName = "Compose4Desktop Template App"
+                javaHome = "/Library/Java/JavaVirtualMachines/jdk-17.0.2.jdk"
+                iconFile.set(project.file("src/jvmMain/resources/mipmap/ic_launcher.icns"))
+                mainClass = "$group.MainKt"
+                appCategory = "public.app-category.developer-tools"
+            }
+        }
+    }
+}
+```
+
+Si nos fijamos, en la sección nativeDistributions definimos la configuración para cada plataforma.
+Para Windows generará un Msi, y para MacOs un dmg totalmente preparado. A tener en cuenta que para Windows
+necesitaremos un .ico como icono de la aplicación y para MacOs un fichero .icns.
+
+Es preciso tener en cuenta, que se indica el javaHome varias veces, por defecto se establece el jdk local,
+pero noté que si en MacOs no lo establecía de nuevo, la tarea gradle encargada de generar el dmg no funcionaba
+correctamente.
+
+Para generar los dmg, msi o deb (en el caso de linux), disponemos de una serie de tareas de gradle que nos 
+van a facilitar la labor:
+
+![img.png](art/gradle_tasks.png)
+
+Las tareas packageRelease[Dmg|Msi|Deb] nos van a facilitar la tarea de generación de instaladores.
+
+Los instaladores generados se guardan en la carpeta [ProjectFolder]/build/compose/binaries/main-release/
+
 ## Consideraciones finales / curiosidades
 
 KMP es una tecnología apasionante, ya teníamos capacidades de diseño de UI con Java/Kotlin utilizando Swing o JavaFx (con 
